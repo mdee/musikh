@@ -98,13 +98,13 @@ def upload_to_s3(file_dict):
     today = datetime.datetime.now()
     f = open(filepath, 'r+')
     sys.stdout.flush()
-    url_path = '{0}/{1}/{2}/{3}'.format(today.year, today.month, today.day, re.sub(r'\s', '+', filename))
+    url_path = '{0}/{1}/{2}/{3}'.format(today.year, today.month, today.day, re.sub(r'\s', '', filename))
     k.key = url_path
     print('Uploading \'{0}\''.format(filename))
     k.set_contents_from_file(f, cb=percent_cb, num_cb=10)
     print('All done uploading!')
     url = 'https://{0}/{1}/{2}'.format(S3_HOST, MUSIC_BUCKET, url_path)
-    shortener = Shortener('GoogleShortener')
+    shortener = Shortener('IsgdShortener')
     print '\nShareable URL: {0}'.format(shortener.short(url))
 
 if __name__ == '__main__':
